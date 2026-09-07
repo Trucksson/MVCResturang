@@ -1,0 +1,109 @@
+@model List<MVCResturang.Models.Table>
+@{
+    ViewData["Title"] = "Hantera Bord";
+}
+
+<div class="container mt-4">
+    <div class="row mb-4">
+        <div class="col-md-8">
+            <h1>Hantera Bord</h1>
+            <p class="text-muted">Lägg till, redigera eller ta bort bord</p>
+        </div>
+        <div class="col-md-4 text-end">
+            <a asp-action="CreateTable" class="btn btn-success">
+                <i class="bi bi-plus-circle"></i> Lägg till nytt bord
+            </a>
+            <a asp-action="Dashboard" class="btn btn-secondary">
+                <i class="bi bi-arrow-left"></i> Tillbaka
+            </a>
+        </div>
+    </div>
+
+    @if (TempData["SuccessMessage"] != null)
+    {
+        <div class="alert alert-success alert-dismissible fade show">
+            @TempData["SuccessMessage"]
+            <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+        </div>
+    }
+
+    @if (TempData["ErrorMessage"] != null)
+    {
+        <div class="alert alert-danger alert-dismissible fade show">
+            @TempData["ErrorMessage"]
+            <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+        </div>
+    }
+
+    @if (ViewBag.ErrorMessage != null)
+    {
+        <div class="alert alert-danger">
+            @ViewBag.ErrorMessage
+        </div>
+    }
+
+    @if (Model == null || !Model.Any())
+    {
+        <div class="alert alert-info">
+            <i class="bi bi-info-circle"></i> Inga bord finns ännu. Klicka på "Lägg till nytt bord" för att börja.
+        </div>
+    }
+    else
+    {
+        <div class="row">
+            @foreach (var table in Model.OrderBy(t => t.TableNumber))
+            {
+                <div class="col-md-4 mb-4">
+                    <div class="card h-100 shadow-sm">
+                        <div class="card-header bg-primary text-white">
+                            <h4 class="mb-0">
+                                <i class="bi bi-grid-3x3"></i> Bord @table.TableNumber
+                            </h4>
+                        </div>
+                        <div class="card-body">
+                            <div class="text-center mb-3">
+                                <i class="bi bi-people-fill" style="font-size: 3rem; color: #0d6efd;"></i>
+                            </div>
+                            <h5 class="text-center">Kapacitet: <span class="badge bg-info">@table.Capacity platser</span></h5>
+                            <hr />
+                            <p class="text-muted small mb-0">Bord ID: @table.Id</p>
+                        </div>
+                        <div class="card-footer">
+                            <div class="d-grid gap-2">
+                                <a asp-action="EditTable" asp-route-id="@table.Id" class="btn btn-primary btn-sm">
+                                    <i class="bi bi-pencil"></i> Redigera
+                                </a>
+                                <form asp-action="DeleteTable" asp-route-id="@table.Id" method="post"
+                                      onsubmit="return confirm('Är du säker på att du vill ta bort Bord @table.TableNumber?');">
+                                    @Html.AntiForgeryToken()
+                                    <button type="submit" class="btn btn-danger btn-sm w-100">
+                                        <i class="bi bi-trash"></i> Ta bort
+                                    </button>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            }
+        </div>
+
+        <div class="mt-4">
+            <div class="card">
+                <div class="card-body">
+                    <h5>Statistik</h5>
+                    <div class="row">
+                        <div class="col-md-4">
+                            <p class="mb-0"><strong>Totalt antal bord:</strong> @Model.Count</p>
+                        </div>
+                        <div class="col-md-4">
+                            <p class="mb-0"><strong>Total kapacitet:</strong> @Model.Sum(t => t.Capacity) platser</p>
+                        </div>
+                        <div class="col-md-4">
+                            <p class="mb-0"><strong>Genomsnittlig storlek:</strong> @Math.Round(Model.Average(t => t.Capacity), 1) platser</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    }
+</div>

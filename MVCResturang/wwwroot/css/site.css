@@ -1,0 +1,475 @@
+html {
+  font-size: 14px;
+}
+
+@media (min-width: 768px) {
+  html {
+    font-size: 16px;
+  }
+}
+
+.btn:focus, .btn:active:focus, .btn-link.nav-link:focus, .form-control:focus, .form-check-input:focus {
+  box-shadow: 0 0 0 0.1rem white, 0 0 0 0.25rem #258cfb;
+}
+
+html {
+  position: relative;
+  min-height: 100%;
+}
+
+body {
+  margin-bottom: 60px;
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh; /* gör så footer hamnar längst ner om innehållet är kort */
+}
+
+/* =========================================================
+   ASIAN RESTAURANT THEME
+   ========================================================= */
+
+body.theme-asian {
+    font-family: "Noto Sans JP", system-ui, sans-serif;
+
+    --dark-red: #641b1b;
+    --deep-red: #801f1f;
+    --red: #a52a2a;
+    --gold: #c79a45;
+
+    --cream: #f7f1e7;
+    --cream-dark: #eee3d2;
+
+    --dark-green: #173d32;
+
+    --text: #292522;
+    --muted: #756e67;
+
+    background-color: var(--cream);
+    color: var(--text);
+}
+
+/* NAVBAR */
+body.theme-asian .navbar {
+    background-color: var(--dark-red) !important;
+    border-bottom: 3px solid var(--gold) !important;
+    padding: 0.9rem 0;
+}
+
+body.theme-asian .navbar-brand {
+    color: #fff !important;
+    font-size: 1.25rem;
+    font-weight: 700;
+    letter-spacing: 1px;
+}
+
+body.theme-asian .nav-link {
+    color: rgba(255,255,255,0.9) !important;
+    margin-left: 1rem;
+    transition: 0.2s ease;
+}
+
+body.theme-asian .nav-link:hover {
+    color: #fff !important;
+}
+
+/* MAIN CONTENT CONTAINER */
+main.container {
+  flex: 1 0 auto;
+  max-width: 1000px;     /* gör containern betydligt smalare */
+  margin-left: auto;
+  margin-right: auto;    /* centrera horisontellt */
+  padding-top: 2rem;
+  padding-bottom: 2rem;
+}
+
+/* HERO */
+.restaurant-hero {
+    min-height: 620px;
+
+    background-image:
+        linear-gradient(
+            rgba(45, 10, 10, 0.55),
+            rgba(45, 10, 10, 0.65)
+        ),
+        url('/images/bg-hero-1.jpg');
+
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+
+    display: flex;
+    align-items: center;
+
+    color: white;
+
+    max-width: 1000px;     /* begränsa hero-bredd */
+    margin: 1.5rem auto;   /* centrera och skapa luft runt */
+    border-radius: 6px;
+    overflow: hidden;
+    min-height: 420px;     /* gör hero mindre än tidigare */
+    box-shadow: 0 8px 20px rgba(0,0,0,0.06);
+    background-clip: border-box;
+}
+
+.restaurant-hero-overlay {
+    width: 100%;
+    padding: 7rem 0;
+}
+
+.restaurant-hero .restaurant-hero-overlay {
+  padding: 4rem 3rem;    /* mindre än tidigare */
+}
+
+.hero-content {
+    max-width: 700px;
+    margin: 0;             /* behåll vänsterjusterad innehåll i den centrerade boxen */
+}
+
+.hero-small-title {
+    display: inline-block;
+
+    color: #e1bd70;
+
+    font-size: 0.8rem;
+    font-weight: 700;
+    letter-spacing: 4px;
+
+    margin-bottom: 1.2rem;
+}
+
+.hero-content h1 {
+    font-size: clamp(2.2rem, 5vw, 3.8rem);
+
+    line-height: 1.02;
+
+    font-weight: 700;
+
+    margin-bottom: 1.5rem;
+
+    letter-spacing: -1px;
+}
+
+.hero-content p {
+    font-size: 1.15rem;
+
+    max-width: 550px;
+
+    line-height: 1.8;
+
+    color: rgba(255,255,255,0.9);
+
+    margin-bottom: 2rem;
+}
+
+/* BUTTONS */
+.restaurant-btn,
+.restaurant-btn-outline {
+    display: inline-block;
+
+    padding: 0.85rem 1.7rem;
+
+    text-decoration: none;
+
+    font-weight: 700;
+
+    transition: all 0.2s ease;
+}
+
+.restaurant-btn {
+    background-color: var(--red);
+    color: white;
+
+    border: 2px solid var(--red);
+}
+
+.restaurant-btn:hover {
+    background-color: #8b2020;
+    border-color: #8b2020;
+
+    color: white;
+
+    transform: translateY(-2px);
+}
+
+.restaurant-btn-outline {
+    color: white;
+
+    border: 2px solid rgba(255,255,255,0.8);
+
+    margin-left: 0.6rem;
+}
+
+.restaurant-btn-outline:hover {
+    background-color: white;
+    color: var(--dark-red);
+
+    transform: translateY(-2px);
+}
+
+/* ABOUT / FEATURES */
+.about-section {
+    padding: 6rem 0;
+
+    background-color: var(--cream);
+}
+
+.section-heading {
+    max-width: 650px;
+
+    margin: 0 auto;
+
+    text-align: center;
+}
+
+.section-heading span {
+    color: var(--red);
+
+    font-size: 0.75rem;
+
+    font-weight: 700;
+
+    letter-spacing: 3px;
+}
+
+.section-heading h2 {
+    margin-top: 0.7rem;
+
+    margin-bottom: 1rem;
+
+    font-size: 2.5rem;
+
+    font-weight: 700;
+
+    color: var(--dark-red);
+}
+
+.section-heading p {
+    color: var(--muted);
+
+    line-height: 1.8;
+}
+
+/* FEATURE CARDS */
+.feature-card {
+    background-color: #fff;
+
+    text-align: center;
+
+    padding: 2.5rem 2rem;
+
+    height: 100%;
+
+    border-bottom: 4px solid var(--red);
+
+    box-shadow: 0 8px 25px rgba(60, 20, 10, 0.08);
+
+    transition: transform 0.2s ease;
+}
+
+.feature-card:hover {
+    transform: translateY(-5px);
+}
+
+.feature-icon {
+    color: var(--gold);
+
+    font-size: 1.8rem;
+
+    margin-bottom: 1rem;
+}
+
+.feature-card h3 {
+    color: var(--dark-red);
+
+    font-size: 1.25rem;
+
+    margin-bottom: 1rem;
+}
+
+.feature-card p {
+    color: var(--muted);
+
+    line-height: 1.7;
+
+    margin-bottom: 0;
+}
+
+/* BOOKING BANNER */
+.booking-banner {
+    background-color: var(--dark-red);
+
+    color: white;
+
+    padding: 4rem 0;
+}
+
+.booking-banner-content {
+    display: flex;
+
+    align-items: center;
+
+    justify-content: space-between;
+
+    gap: 2rem;
+}
+
+.booking-banner span {
+    color: #dcb968;
+
+    font-size: 0.75rem;
+
+    font-weight: 700;
+
+    letter-spacing: 3px;
+}
+
+.booking-banner h2 {
+    margin-top: 0.5rem;
+
+    margin-bottom: 0.5rem;
+
+    font-size: 2rem;
+}
+
+.booking-banner p {
+    color: rgba(255,255,255,0.75);
+
+    margin-bottom: 0;
+}
+
+.light-btn {
+    background-color: #fff;
+
+    border-color: #fff;
+
+    color: var(--dark-red);
+
+    white-space: nowrap;
+}
+
+.light-btn:hover {
+    background-color: var(--cream);
+
+    border-color: var(--cream);
+
+    color: var(--dark-red);
+}
+
+/* FOOTER */
+body.theme-asian footer {
+    background-color: #321313 !important;
+
+    color: rgba(255,255,255,0.7) !important;
+
+    border-top: none !important;
+
+    padding: 2rem 0;
+
+    margin-top: 0;
+}
+
+body.theme-asian footer .container {
+    text-align: center;
+}
+
+/* Placeholder styling for menu items without images */
+.no-image-box {
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(180deg, #fff 0%, #fbf8f5 100%);
+    border: 1px solid rgba(0,0,0,0.04);
+    color: #3d2e2b;
+    padding: 1rem;
+    box-sizing: border-box;
+}
+
+/* Ensure card-img-overlay still readable on images */
+.overlay-gradient {
+    background: linear-gradient(180deg, rgba(0,0,0,0.08) 0%, rgba(0,0,0,0.55) 100%);
+}
+
+/* Make card titles consistent for placeholders */
+.no-image-box h5 {
+    font-size: 1.05rem;
+    margin-bottom: .4rem;
+}
+
+/* Keep card heights consistent and body flexible */
+.menu-card {
+    display: flex;
+    flex-direction: column;
+}
+
+/* Ensure ratio children fill area */
+.ratio .no-image-box,
+.ratio img {
+    display: block;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+/* Slight visual refinement for price */
+.text-accent {
+    color: var(--red, #a52a2a);
+}
+
+/* Responsive tweak */
+@media (max-width: 576px) {
+    .no-image-box h5 {
+        font-size: 1rem;
+    }
+    .no-image-box p {
+        font-size: .85rem;
+    }
+}
+
+/* Popular badge under image/placeholder */
+.popularity-badge {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: .5rem;
+}
+
+.popularity-badge .badge {
+    font-weight: 700;
+    padding: .35rem .55rem;
+    font-size: .85rem;
+}
+
+/* Små justeringar så badge inte påverkar kortens höjd för mycket */
+.menu-card > .popularity-badge {
+    margin-left: .5rem;
+    margin-right: .5rem;
+}
+
+/* Mobil: mindre badge */
+@media (max-width: 576px) {
+    .popularity-badge .badge {
+        font-size: .75rem;
+        padding: .25rem .45rem;
+    }
+}
+
+/* MOBILE */
+@media (max-width: 768px) {
+
+    main.container {
+    max-width: 92%;
+    padding-top: 1rem;
+    padding-bottom: 1rem;
+  }
+
+    .restaurant-hero {
+        min-height: 320px;
+    }
+
+    .restaurant-hero .restaurant-hero-overlay {
+        padding: 3rem 1.25rem;
+    }
+
+    .hero-content h1 {
+        font-size: 1.8rem;
+    }
+}

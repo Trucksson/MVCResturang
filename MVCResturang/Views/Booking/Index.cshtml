@@ -1,0 +1,79 @@
+@model MVCResturang.Models.BookingViewModel
+@{
+    ViewData["Title"] = "Bokning";
+}
+
+<h1>Boka bord</h1>
+<p class="lead">Fyll i formuläret nedan för att boka ett bord hos oss.</p>
+
+<!-- Display validation summary for general errors -->
+<div asp-validation-summary="ModelOnly" class="alert alert-danger"></div>
+
+<form asp-action="Index" method="post" class="needs-validation">
+    <div class="row">
+        <!-- Name field -->
+        <div class="col-md-6 mb-3">
+            <label asp-for="Name" class="form-label"></label>
+            <input asp-for="Name" class="form-control" placeholder="Ditt fullständiga namn" />
+            <span asp-validation-for="Name" class="text-danger"></span>
+        </div>
+
+        <!-- Email field -->
+        <div class="col-md-6 mb-3">
+            <label asp-for="Email" class="form-label"></label>
+            <input asp-for="Email" class="form-control" placeholder="din@email.com" />
+            <span asp-validation-for="Email" class="text-danger"></span>
+        </div>
+    </div>
+
+    <div class="row">
+        <!-- Phone field -->
+        <div class="col-md-6 mb-3">
+            <label asp-for="Phone" class="form-label"></label>
+            <input asp-for="Phone" class="form-control" placeholder="070-123 45 67" />
+            <span asp-validation-for="Phone" class="text-danger"></span>
+        </div>
+
+        <!-- Number of guests field -->
+        <div class="col-md-6 mb-3">
+            <label asp-for="NumberOfGuests" class="form-label"></label>
+            <input asp-for="NumberOfGuests" class="form-control" type="number" min="1" max="8" />
+            <span asp-validation-for="NumberOfGuests" class="text-danger"></span>
+            <small class="form-text text-muted">Välj mellan 1 och 8 personer.</small>
+        </div>
+    </div>
+
+    <div class="row">
+        <!-- Date field -->
+        <div class="col-md-6 mb-3">
+            <label asp-for="Date" class="form-label"></label>
+            <input asp-for="Date" class="form-control" type="date" />
+            <span asp-validation-for="Date" class="text-danger"></span>
+        </div>
+
+        <!-- Time field -->
+        <div class="col-md-6 mb-3">
+            <label asp-for="Time" class="form-label"></label>
+            <input asp-for="Time" class="form-control" type="time" />
+            <span asp-validation-for="Time" class="text-danger"></span>
+            <small class="form-text text-muted">Öppettider: 11:00 - 22:00</small>
+        </div>
+    </div>
+
+    <!-- Special requests field -->
+    <div class="mb-3">
+        <label asp-for="SpecialRequests" class="form-label"></label>
+        <textarea asp-for="SpecialRequests" class="form-control" rows="3" 
+                  placeholder="T.ex. allergier, barnstol, fönsterplats..."></textarea>
+        <span asp-validation-for="SpecialRequests" class="text-danger"></span>
+    </div>
+
+    <!-- Submit button -->
+    <button type="submit" class="btn btn-primary btn-lg">Bekräfta bokning</button>
+    <a asp-controller="Home" asp-action="Index" class="btn btn-secondary btn-lg">Avbryt</a>
+</form>
+
+@section Scripts {
+    <!-- Enable client-side validation -->
+    <partial name="_ValidationScriptsPartial" />
+}

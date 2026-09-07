@@ -1,0 +1,23 @@
+﻿@{
+    ViewData["Title"] = "Bokningsbekräftelse";
+}
+
+<div class="text-center mt-5">
+    <div class="alert alert-success" role="alert">
+        <h1 class="display-4">✓ Bokning Bekräftad!</h1>
+        <hr />
+        <p class="lead">@ViewBag.Message</p>
+        
+        @if (ViewBag.BookingId != null)
+        {
+            <p><strong>Bokningsnummer:</strong> @ViewBag.BookingId</p>
+        }
+        
+        <p class="mt-4">Vi ser fram emot ditt besök!</p>
+    </div>
+
+    <div class="mt-4">
+        <a asp-controller="Home" asp-action="Index" class="btn btn-primary">Tillbaka till startsidan</a>
+        <a asp-controller="Menu" asp-action="Index" class="btn btn-secondary">Se vår meny</a>
+    </div>
+</div>

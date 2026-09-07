@@ -1,0 +1,87 @@
+@{
+    ViewData["Title"] = "Admin Dashboard";
+}
+
+<div class="container mt-4">
+    <!-- Header -->
+    <div class="row mb-4">
+        <div class="col-md-12">
+            <h1>Admin Dashboard</h1>
+            <p class="lead">Välkommen, <strong>@ViewBag.AdminUsername</strong>!</p>
+            <hr />
+        </div>
+    </div>
+
+    <!-- Success/Error Messages -->
+    @if (TempData["SuccessMessage"] != null)
+    {
+        <div class="alert alert-success alert-dismissible fade show">
+            @TempData["SuccessMessage"]
+            <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+        </div>
+    }
+
+    @if (ViewBag.ErrorMessage != null)
+    {
+        <div class="alert alert-danger">
+            @ViewBag.ErrorMessage
+        </div>
+    }
+
+    <!-- Statistics Cards -->
+    <div class="row mb-4">
+        <div class="col-md-4">
+            <div class="card text-white bg-primary mb-3">
+                <div class="card-body">
+                    <h5 class="card-title">Totala Bokningar</h5>
+                    <h2 class="card-text">@(ViewBag.TotalBookings ?? 0)</h2>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="card text-white bg-success mb-3">
+                <div class="card-body">
+                    <h5 class="card-title">Bokningar Idag</h5>
+                    <h2 class="card-text">@(ViewBag.TodayBookings ?? 0)</h2>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="card text-white bg-info mb-3">
+                <div class="card-body">
+                    <h5 class="card-title">Antal Rätter</h5>
+                    <h2 class="card-text">@(ViewBag.TotalMenuItems ?? 0)</h2>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Quick Actions -->
+    <div class="row">
+        <div class="col-md-12">
+            <h3>Snabbåtgärder</h3>
+            <div class="list-group">
+                <a asp-action="Bookings" class="list-group-item list-group-item-action">
+                    <i class="bi bi-calendar-check"></i> Hantera Bokningar
+                    <span class="badge bg-primary rounded-pill float-end">@(ViewBag.TotalBookings ?? 0)</span>
+                </a>
+                <a asp-action="MenuItems" class="list-group-item list-group-item-action">
+                    <i class="bi bi-journal-text"></i> Hantera Meny
+                    <span class="badge bg-info rounded-pill float-end">@(ViewBag.TotalMenuItems ?? 0)</span>
+                </a>
+                <a asp-action="Tables" class="list-group-item list-group-item-action">
+                    <i class="bi bi-table"></i> Hantera Bord
+                </a>
+            </div>
+        </div>
+    </div>
+
+    <!-- Logout Button -->
+    <div class="row mt-4">
+        <div class="col-md-12">
+            <a asp-action="Logout" class="btn btn-danger">
+                <i class="bi bi-box-arrow-right"></i> Logga ut
+            </a>
+        </div>
+    </div>
+</div>

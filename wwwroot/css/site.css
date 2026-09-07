@@ -1,0 +1,157 @@
+/* Global typography + theme colors */
+body.theme-asian {
+    font-family: "Noto Sans JP", system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial;
+    color: #2b2b2b;
+    --accent: #b22b2b;    /* deep red */
+    --accent-2: #d4a21a;  /* warm gold */
+    --muted: #6c6c6c;
+}
+
+/* Bas-styling + rött tema och bakgrundsbild */
+:root{
+  --brand-red: #b22222;
+  --accent: #b22222;
+  --muted: #6c757d;
+}
+
+/* Minimal baseline styles for the site (Bootstrap provides main layout) */
+
+body {
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+  color: #222;
+  background-image: url("/images/Asiatisk-bakgrund-Vit.jpg");
+  background-size: cover;
+  background-position: center center;
+  background-attachment: fixed;
+  background-repeat: no-repeat;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* Gör huvudinnehållet läsbart ovanpå bakgrunden */
+.main-panel {
+  background-color: rgba(255,255,255,0.92); /* nästan vit, låter bakgrund synas svagt */
+  border-radius: 8px;
+  padding: 2rem;
+  max-width: 1100px;
+  margin-top: 1.5rem;
+  margin-bottom: 1.5rem;
+  box-shadow: 0 8px 26px rgba(0,0,0,0.08);
+}
+
+/* Navbar tweaks */
+.navbar-brand {
+  font-weight: 700;
+  letter-spacing: .3px;
+}
+
+/* Länkar i navbar */
+.navbar .nav-link {
+  color: rgba(255,255,255,0.95) !important;
+}
+
+/* Primär knappstil som följer röd temafärg */
+.btn-primary, .btn-cta {
+  background-color: var(--accent);
+  border-color: var(--accent);
+}
+.btn-primary:hover, .btn-cta:hover {
+  background-color: #8b1b1b;
+  border-color: #8b1b1b;
+}
+
+/* Simple card defaults for menu items */
+.card.menu-card {
+  border-radius: 8px;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.04);
+}
+
+/* Make sure image covers area without distortion */
+.menu-card .card-img-top {
+    object-fit: cover;
+}
+
+/* Subtle dark gradient overlay so text is readable on bright images */
+.overlay-gradient {
+    background: linear-gradient(180deg, rgba(0,0,0,0.10) 0%, rgba(0,0,0,0.55) 100%);
+}
+
+/* Text shadow to improve readability */
+.text-shadow-sm {
+    text-shadow: 0 2px 6px rgba(0,0,0,0.5);
+}
+
+/* Accent color for price (uses existing theme variable if set) */
+.text-accent {
+    color: var(--accent, #b22b2b);
+}
+
+/* Make badges small and crisp on overlay */
+.card-img-overlay .badge {
+    font-size: 0.7rem;
+    padding: .25rem .45rem;
+}
+
+/* Small visual tweaks */
+.navbar-brand {
+    font-weight: 700;
+    letter-spacing: .4px;
+    color: var(--accent) !important;
+}
+a.nav-link.text-dark {
+    color: #333 !important;
+}
+
+/* Image box used in admin table, but also useful for menus */
+.image-box {
+    width: 120px;
+    height: 90px;
+    position: relative;
+    overflow: hidden;
+    border-radius: 6px;
+    background: #f8f9fa;
+    display: inline-block;
+}
+.image-box img {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+}
+
+/* Caption overlay */
+.image-caption {
+    position: absolute;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    padding: .25rem .5rem;
+    background: rgba(0, 0, 0, 0.65);
+    color: #fff;
+    font-size: 0.75rem;
+    line-height: 1;
+    display: none;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+.image-box:hover .image-caption {
+    display: block;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+    .hero-overlay { padding: 3.5rem 0; }
+    .hero-content h1 { font-size: 1.75rem; }
+    .image-box { width: 90px; height: 68px; }
+    .main-panel {
+    padding: 1.25rem;
+    margin-top: 1rem;
+    margin-bottom: 1rem;
+  }
+}
+@media (max-width: 576px) {
+    .ratio-4x3 { aspect-ratio: 4 / 3; } /* modern browsers */
+}

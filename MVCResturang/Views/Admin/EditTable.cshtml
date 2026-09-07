@@ -1,0 +1,70 @@
+@model MVCResturang.Models.Table
+@{
+    ViewData["Title"] = "Redigera bord";
+}
+
+<div class="container mt-4">
+    <div class="row">
+        <div class="col-md-6 offset-md-3">
+            <div class="card">
+                <div class="card-header bg-primary text-white">
+                    <h2><i class="bi bi-pencil-square"></i> Redigera Bord @Model.TableNumber</h2>
+                </div>
+                <div class="card-body">
+                    <form asp-action="EditTable" method="post">
+                        <input type="hidden" asp-for="Id" />
+
+                        <div asp-validation-summary="ModelOnly" class="alert alert-danger"></div>
+
+                        <div class="mb-3">
+                            <label asp-for="TableNumber" class="form-label">Bordsnummer</label>
+                            <input asp-for="TableNumber" class="form-control" type="number" min="1" />
+                            <span asp-validation-for="TableNumber" class="text-danger"></span>
+                        </div>
+
+                        <div class="mb-3">
+                            <label asp-for="Capacity" class="form-label">Antal platser</label>
+                            <input asp-for="Capacity" class="form-control" type="number" min="1" max="20" />
+                            <span asp-validation-for="Capacity" class="text-danger"></span>
+                        </div>
+
+                        <div class="alert alert-warning">
+                            <i class="bi bi-exclamation-triangle"></i> 
+                            <strong>Obs:</strong> Om du ändrar bordsnumret, kontrollera att inga befintliga bokningar påverkas.
+                        </div>
+
+                        <div class="d-grid gap-2">
+                            <button type="submit" class="btn btn-primary btn-lg">
+                                <i class="bi bi-check-circle"></i> Spara ändringar
+                            </button>
+                            <a asp-action="Tables" class="btn btn-secondary">
+                                <i class="bi bi-x-circle"></i> Avbryt
+                            </a>
+                        </div>
+                    </form>
+                </div>
+            </div>
+
+            <!-- Raderingssektion -->
+            <div class="card mt-3 border-danger">
+                <div class="card-header bg-danger text-white">
+                    <h5 class="mb-0"><i class="bi bi-exclamation-triangle"></i> Farlig zon</h5>
+                </div>
+                <div class="card-body">
+                    <p>Om du vill ta bort detta bord permanent:</p>
+                    <form asp-action="DeleteTable" asp-route-id="@Model.Id" method="post"
+                          onsubmit="return confirm('Är du SÄKER på att du vill ta bort Bord @Model.TableNumber? Detta går inte att ångra!');">
+                        @Html.AntiForgeryToken()
+                        <button type="submit" class="btn btn-danger">
+                            <i class="bi bi-trash"></i> Ta bort bord permanent
+                        </button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}

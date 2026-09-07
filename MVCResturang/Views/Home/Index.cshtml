@@ -1,0 +1,143 @@
+﻿@{
+    ViewData["Title"] = "Hem";
+}
+
+<section class="restaurant-hero">
+
+    <div class="restaurant-hero-overlay">
+
+        <div class="container">
+            <div class="hero-content">
+
+                <span class="hero-small-title">AUTENTISKA SMAKER</span>
+
+                <h1>Välkommen till<br />vår restaurang</h1>
+
+                <p>
+                    Upptäck asiatiska smaker, färska råvaror
+                    och traditionella rätter.
+                </p>
+
+                <div class="hero-buttons">
+                    <a asp-controller="Menu"
+                       asp-action="Index"
+                       class="restaurant-btn">
+                        Se menyn
+                    </a>
+
+                    <a asp-controller="Booking"
+                       asp-action="Index"
+                       class="restaurant-btn-outline">
+                        Boka bord
+                    </a>
+                </div>
+
+            </div>
+        </div>
+
+    </div>
+
+</section>
+
+
+<section class="about-section">
+
+    <div class="container">
+
+        <div class="section-heading">
+            <span>VÅR RESTAURANG</span>
+            <h2>Smaker med tradition</h2>
+            <p>
+                Vi kombinerar traditionella asiatiska smaker
+                med färska råvaror och en modern känsla.
+            </p>
+        </div>
+
+
+        <div class="row g-4 mt-4">
+
+            <div class="col-md-4">
+                <div class="feature-card">
+
+                    <div class="feature-icon">
+                        ✦
+                    </div>
+
+                    <h3>Färska råvaror</h3>
+
+                    <p>
+                        Vi använder noggrant utvalda råvaror
+                        för att skapa smakrika och fräscha rätter.
+                    </p>
+
+                </div>
+            </div>
+
+
+            <div class="col-md-4">
+                <div class="feature-card">
+
+                    <div class="feature-icon">
+                        ✦
+                    </div>
+
+                    <h3>Traditionella smaker</h3>
+
+                    <p>
+                        Inspirerat av klassiska asiatiska
+                        recept och mattraditioner.
+                    </p>
+
+                </div>
+            </div>
+
+
+            <div class="col-md-4">
+                <div class="feature-card">
+
+                    <div class="feature-icon">
+                        ✦
+                    </div>
+
+                    <h3>Varm atmosfär</h3>
+
+                    <p>
+                        En avslappnad och trivsam miljö
+                        för både vardag och speciella tillfällen.
+                    </p>
+
+                </div>
+            </div>
+
+        </div>
+
+    </div>
+
+</section>
+
+
+<section class="booking-banner">
+
+    <div class="container">
+
+        <div class="booking-banner-content">
+
+            <div>
+                <span>EN KVÄLL ATT MINNAS</span>
+                <h2>Boka ett bord hos oss</h2>
+                <p>
+                    Välj datum och tid så tar vi hand om resten.
+                </p>
+            </div>
+
+            <a asp-controller="Booking"
+               asp-action="Index"
+               class="restaurant-btn light-btn">
+                Boka bord
+            </a>
+
+        </div>
+
+    </div>
+
+</section>

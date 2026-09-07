@@ -1,0 +1,154 @@
+﻿@model MVCResturang.Models.MenuItem
+@{
+    ViewData["Title"] = "Redigera rätt";
+}
+
+<div class="container mt-4">
+    <div class="row">
+        <div class="col-md-8 offset-md-2">
+            <div class="card">
+                <div class="card-header bg-primary text-white">
+                    <h2><i class="bi bi-pencil"></i> Redigera rätt</h2>
+                </div>
+                <div class="card-body">
+                    <form asp-action="EditMenuItem" method="post">
+                        <input type="hidden" asp-for="Id" />
+                        <div asp-validation-summary="ModelOnly" class="alert alert-danger"></div>
+
+                        <div class="mb-3">
+                            <label asp-for="Name" class="form-label">Namn på rätten</label>
+                            <input asp-for="Name" class="form-control" />
+                            <span asp-validation-for="Name" class="text-danger"></span>
+                        </div>
+
+                        <div class="mb-3">
+                            <label asp-for="Description" class="form-label">Beskrivning</label>
+                            <textarea asp-for="Description" class="form-control" rows="4"></textarea>
+                            <span asp-validation-for="Description" class="text-danger"></span>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-md-6 mb-3">
+                                <label asp-for="Price" class="form-label">Pris (kr)</label>
+                                <input asp-for="Price" class="form-control" type="number" step="0.01" />
+                                <span asp-validation-for="Price" class="text-danger"></span>
+                            </div>
+
+                            <div class="col-md-6 mb-3">
+                                <label asp-for="IsPopular" class="form-label">Populär rätt?</label>
+                                <div class="form-check">
+                                    <input asp-for="IsPopular" class="form-check-input" type="checkbox" />
+                                    <label class="form-check-label" asp-for="IsPopular">
+                                        Markera som populär
+                                    </label>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="mb-3">
+                            <label asp-for="BildUrl" class="form-label">
+                                <i class="bi bi-link-45deg"></i> Bild-URL
+                            </label>
+                            
+                            @if (!string.IsNullOrEmpty(Model.BildUrl))
+                            {
+                                <div class="alert alert-info mb-2">
+                                    <strong>Nuvarande bild:</strong><br>
+                                    <img src="@Model.BildUrl" alt="@Model.Name" 
+                                         class="img-thumbnail mt-2" style="max-height: 200px;"
+                                         onerror="this.onerror=null; this.src=''; this.style.display='none'; this.nextElementSibling.style.display='block';" />
+                                    <div style="display: none;" class="text-danger mt-2">
+                                        ❌ Den nuvarande bilden kunde inte laddas
+                                    </div>
+                                </div>
+                            }
+                            
+                            <input asp-for="BildUrl" class="form-control" type="url" 
+                                   placeholder="https://exempel.se/bild.jpg" 
+                                   id="bildUrlInput" />
+                            <span asp-validation-for="BildUrl" class="text-danger"></span>
+                            
+                            <div class="form-text">
+                                Lämna tom för att behålla nuvarande bild, eller ange ny URL
+                            </div>
+
+                            <!-- Förhandsvisning -->
+                            <div id="imagePreview" class="mt-3" style="display: none;">
+                                <label class="form-label">Ny förhandsvisning:</label>
+                                <div class="card">
+                                    <img id="previewImg" src="" alt="Förhandsvisning" 
+                                         class="card-img-top" style="max-height: 300px; object-fit: contain;" />
+                                    <div class="card-body">
+                                        <div id="imageStatus" class="alert alert-success mb-0">
+                                            <i class="bi bi-check-circle"></i> Bilden laddades!
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="d-grid gap-2">
+                            <button type="submit" class="btn btn-primary btn-lg">
+                                <i class="bi bi-check-circle"></i> Spara ändringar
+                            </button>
+                            <a asp-action="MenuItems" class="btn btn-secondary">
+                                <i class="bi bi-x-circle"></i> Avbryt
+                            </a>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+    <script>
+        const bildUrlInput = document.getElementById('bildUrlInput');
+        const imagePreview = document.getElementById('imagePreview');
+        const previewImg = document.getElementById('previewImg');
+        const imageStatus = document.getElementById('imageStatus');
+
+        bildUrlInput.addEventListener('blur', function() {
+            const url = this.value.trim();
+            if (url && url !== '@Model.BildUrl') {
+                testImageUrl(url);
+            } else if (!url) {
+                imagePreview.style.display = 'none';
+            }
+        });
+
+        let timeout;
+        bildUrlInput.addEventListener('input', function() {
+            clearTimeout(timeout);
+            const url = this.value.trim();
+            
+            if (url.startsWith('http') && url !== '@Model.BildUrl') {
+                timeout = setTimeout(() => testImageUrl(url), 1000);
+            }
+        });
+
+        function testImageUrl(url) {
+            imagePreview.style.display = 'block';
+            imageStatus.className = 'alert alert-info mb-0';
+            imageStatus.innerHTML = '<i class="bi bi-hourglass-split"></i> Laddar bild...';
+            
+            const img = new Image();
+            
+            img.onload = function() {
+                previewImg.src = url;
+                imageStatus.className = 'alert alert-success mb-0';
+                imageStatus.innerHTML = `<i class="bi bi-check-circle"></i> Bilden laddades! (${img.width}x${img.height}px)`;
+            };
+            
+            img.onerror = function() {
+                previewImg.src = 'data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 width=%22300%22 height=%22200%22%3E%3Crect width=%22100%25%22 height=%22100%25%22 fill=%22%23f8d7da%22/%3E%3Ctext x=%2250%25%22 y=%2250%25%22 dominant-baseline=%22middle%22 text-anchor=%22middle%22 fill=%22%23721c24%22 font-size=%2216%22%3E❌ Kunde inte ladda bilden%3C/text%3E%3C/svg%3E';
+                imageStatus.className = 'alert alert-danger mb-0';
+                imageStatus.innerHTML = '<i class="bi bi-exclamation-triangle"></i> <strong>Bilden kunde inte laddas!</strong> Kontrollera URL:en.';
+            };
+            
+            img.src = url;
+        }
+    </script>
+}

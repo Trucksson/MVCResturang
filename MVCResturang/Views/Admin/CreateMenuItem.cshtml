@@ -1,0 +1,171 @@
+﻿@model MVCResturang.Models.MenuItem
+@{
+    ViewData["Title"] = "Lägg till ny rätt";
+}
+
+<div class="container mt-4">
+    <div class="row">
+        <div class="col-md-8 offset-md-2">
+            <div class="card">
+                <div class="card-header bg-success text-white">
+                    <h2><i class="bi bi-plus-circle"></i> Lägg till ny rätt</h2>
+                </div>
+                <div class="card-body">
+                    <form asp-action="CreateMenuItem" method="post">
+                        <div asp-validation-summary="ModelOnly" class="alert alert-danger"></div>
+
+                        <div class="mb-3">
+                            <label asp-for="Name" class="form-label">Namn på rätten</label>
+                            <input asp-for="Name" class="form-control" placeholder="T.ex. Pasta Carbonara" />
+                            <span asp-validation-for="Name" class="text-danger"></span>
+                        </div>
+
+                        <div class="mb-3">
+                            <label asp-for="Description" class="form-label">Beskrivning</label>
+                            <textarea asp-for="Description" class="form-control" rows="4" 
+                                      placeholder="Beskriv rätten..."></textarea>
+                            <span asp-validation-for="Description" class="text-danger"></span>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-md-6 mb-3">
+                                <label asp-for="Price" class="form-label">Pris (kr)</label>
+                                <input asp-for="Price" class="form-control" type="number" step="0.01" 
+                                       placeholder="145.00" />
+                                <span asp-validation-for="Price" class="text-danger"></span>
+                            </div>
+
+                            <div class="col-md-6 mb-3">
+                                <label asp-for="IsPopular" class="form-label">Populär rätt?</label>
+                                <div class="form-check">
+                                    <input asp-for="IsPopular" class="form-check-input" type="checkbox" />
+                                    <label class="form-check-label" asp-for="IsPopular">
+                                        Markera som populär
+                                    </label>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="mb-3">
+                            <label asp-for="BildUrl" class="form-label">
+                                <i class="bi bi-link-45deg"></i> Bild-URL
+                            </label>
+                            <input asp-for="BildUrl" class="form-control" type="url" 
+                                   placeholder="https://exempel.se/bild.jpg" 
+                                   id="bildUrlInput" />
+                            <span asp-validation-for="BildUrl" class="text-danger"></span>
+                            
+                            <!-- Tips för bra bild-URLer -->
+                            <div class="alert alert-info mt-2" role="alert">
+                                <strong><i class="bi bi-lightbulb"></i> Tips för bild-URL:er:</strong>
+                                <ul class="mb-0 mt-2">
+                                    <li>Använd bilder från tillförlitliga källor (imgur.com, cloudinary.com)</li>
+                                    <li>Kontrollera att URL:en slutar med .jpg, .png, .gif eller .webp</li>
+                                    <li>Använd HTTPS-länkar (inte HTTP) för att undvika säkerhetsproblem</li>
+                                    <li>Testa URL:en genom att öppna den i en ny flik först</li>
+                                    <li><strong>Rekommenderade gratistjänster:</strong>
+                                        <ul>
+                                            <li><a href="https://unsplash.com" target="_blank">Unsplash</a> - Gratis matbilder</li>
+                                            <li><a href="https://pexels.com" target="_blank">Pexels</a> - Gratis stockbilder</li>
+                                            <li><a href="https://imgur.com" target="_blank">Imgur</a> - För att ladda upp egna bilder</li>
+                                        </ul>
+                                    </li>
+                                </ul>
+                            </div>
+
+                            <!-- Förhandsvisning av bild -->
+                            <div id="imagePreview" class="mt-3" style="display: none;">
+                                <label class="form-label">Förhandsvisning:</label>
+                                <div class="card">
+                                    <img id="previewImg" src="" alt="Förhandsvisning" 
+                                         class="card-img-top" style="max-height: 300px; object-fit: contain;" />
+                                    <div class="card-body">
+                                        <div id="imageStatus" class="alert alert-success mb-0">
+                                            <i class="bi bi-check-circle"></i> Bilden laddades!
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="d-grid gap-2">
+                            <button type="submit" class="btn btn-success btn-lg">
+                                <i class="bi bi-check-circle"></i> Lägg till rätt
+                            </button>
+                            <a asp-action="MenuItems" class="btn btn-secondary">
+                                <i class="bi bi-x-circle"></i> Avbryt
+                            </a>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+    <script>
+        const bildUrlInput = document.getElementById('bildUrlInput');
+        const imagePreview = document.getElementById('imagePreview');
+        const previewImg = document.getElementById('previewImg');
+        const imageStatus = document.getElementById('imageStatus');
+
+        // Förhandsvisning när användaren lämnar fältet
+        bildUrlInput.addEventListener('blur', function() {
+            const url = this.value.trim();
+            
+            if (url) {
+                testImageUrl(url);
+            } else {
+                imagePreview.style.display = 'none';
+            }
+        });
+
+        // Realtidsvalidering när användaren skriver (med debounce)
+        let timeout;
+        bildUrlInput.addEventListener('input', function() {
+            clearTimeout(timeout);
+            const url = this.value.trim();
+            
+            if (url.startsWith('http')) {
+                timeout = setTimeout(() => {
+                    testImageUrl(url);
+                }, 1000); // Vänta 1 sekund efter senaste tangenttryckningen
+            }
+        });
+
+        function testImageUrl(url) {
+            imagePreview.style.display = 'block';
+            imageStatus.className = 'alert alert-info mb-0';
+            imageStatus.innerHTML = '<i class="bi bi-hourglass-split"></i> Laddar bild...';
+            
+            const img = new Image();
+            
+            img.onload = function() {
+                previewImg.src = url;
+                imageStatus.className = 'alert alert-success mb-0';
+                imageStatus.innerHTML = `<i class="bi bi-check-circle"></i> Bilden laddades! (${img.width}x${img.height}px)`;
+            };
+            
+            img.onerror = function() {
+                previewImg.src = 'data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 width=%22300%22 height=%22200%22%3E%3Crect width=%22100%25%22 height=%22100%25%22 fill=%22%23f8d7da%22/%3E%3Ctext x=%2250%25%22 y=%2250%25%22 dominant-baseline=%22middle%22 text-anchor=%22middle%22 fill=%22%23721c24%22 font-size=%2216%22%3E❌ Kunde inte ladda bilden%3C/text%3E%3C/svg%3E';
+                imageStatus.className = 'alert alert-danger mb-0';
+                imageStatus.innerHTML = `
+                    <i class="bi bi-exclamation-triangle"></i> 
+                    <strong>Bilden kunde inte laddas!</strong><br>
+                    <small>Möjliga orsaker:</small>
+                    <ul class="mb-0 mt-1">
+                        <li>URL:en är felaktig eller bilden finns inte</li>
+                        <li>Webbplatsen blockerar direktlänkning (hotlink protection)</li>
+                        <li>Mixed content (HTTP-bild på HTTPS-sida)</li>
+                        <li>CORS-problem från källwebbplatsen</li>
+                    </ul>
+                    <small class="d-block mt-2"><strong>Tips:</strong> Ladda upp bilden till Imgur eller använd Unsplash/Pexels istället.</small>
+                `;
+            };
+            
+            img.src = url;
+        }
+    </script>
+}
